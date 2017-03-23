@@ -62,8 +62,8 @@ let mainWindow;
 function createWindow() {
   // 创建窗口并加载页面
   mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 600,
+    width: 1170,
+    height: 680,
     // frame: false,
     transparent: true,
     icon: path.join(__dirname, './assets/images/icon/128.png'),
