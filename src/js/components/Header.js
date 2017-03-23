@@ -30,6 +30,23 @@ class Header extends Component {
                 <a href="javascript:;">欢迎你, <span>moonrailgun</span> </a>
               </li>
 
+              <li className="am-dropdown tpl-dropdown" data-am-dropdown="">
+                <a href="javascript:;" className="am-dropdown-toggle tpl-dropdown-toggle" data-am-dropdown-toggle="">
+                  <i className="am-icon-plus"></i>
+                </a>
+                {/*弹出列表*/}
+                <ul className="am-dropdown-content tpl-dropdown-content">
+                  <li className="tpl-dropdown-menu-notifications">
+                    <a href="javascript:;" className="tpl-dropdown-menu-notifications-item am-cf">
+                      <div className="tpl-dropdown-menu-notifications-title">
+                        <i className="am-icon-database"></i>
+                        <span> MySql数据库</span>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
               <li className="am-text-sm">
                 <a href="javascript:;">
                   <span className="am-icon-sign-out"></span> 退出
