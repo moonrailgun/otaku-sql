@@ -6,6 +6,7 @@ class SqlManager {
 
   }
 
+  //TODO
   static getEstablishConnect(sqlInfo) {
     const host = sqlInfo.host;
     const port = sqlInfo.port;
@@ -89,6 +90,38 @@ class SqlManager {
 
       connection.query('SHOW DATABASES', function (error, results, fields) {
         if (error) throw error;
+
+        cb(results);
+      });
+
+      connection.end();
+    }else {
+      console.error("链接参数不全无法链接");
+    }
+  }
+
+  static getTables(sqlInfo, cb){
+    const host = sqlInfo.host;
+    const port = sqlInfo.port;
+    const username = sqlInfo.username;
+    const password = sqlInfo.password;
+    const database = sqlInfo.database;
+
+    if(host && port && username){
+      //数据均存在，可以链接
+      var connection = mysql.createConnection({
+        host : host,
+        port : port,
+        user : username,
+        password : password,
+        database : database
+      });
+
+      connection.connect();
+
+      connection.query('SHOW TABLES', function (error, results, fields) {
+        if (error) throw error;
+        // console.log('The solution is: ', results[0].solution);
 
         cb(results);
       });

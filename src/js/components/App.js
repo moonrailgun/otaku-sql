@@ -14,8 +14,10 @@ class App extends Component {
     }
   }
 
-  _changeContentPage(info) {
-    console.log(info);
+  _changeContentPage(page) {
+    this.setState({
+      contentPage: page
+    });
   }
 
   render() {
@@ -24,7 +26,7 @@ class App extends Component {
         <Header />
         <Skiner />
         <Sidebar
-          onChangeContentPage = {this._changeContentPage} />
+          onChangeContentPage = {this._changeContentPage.bind(this)} />
         <Content>
           {this.state.contentPage}
         </Content>

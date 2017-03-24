@@ -15,7 +15,7 @@ class AddSql extends Component {
     const password = this.refs.password.value || "";
 
     if(host && port && username){
-      console.log(host + "|" +port+"|" +username+"|" +password);
+      console.log(host + "|" +port+ "|" +username+ "|" +password);
 
       SqlManager.testConnect({
         host:host,
@@ -64,13 +64,14 @@ class AddSql extends Component {
 
     if(host && port && username){
       console.log(host + "|" + port+"|" + username+"|" + password);
-
-      SqlManager.getDatabases({
+      const connectionInfo = {
         host:host,
         port:port,
         username:username,
         password:password
-      }, function(results){
+      }
+
+      SqlManager.getDatabases(connectionInfo, function(results){
         if(typeof(results) == "object"){
           let databases = [];
           results.map(function(item, index){
@@ -80,6 +81,7 @@ class AddSql extends Component {
 
           LocalStorage.addConnection({
             name: connectName,
+            info: connectionInfo,
             databases: databases
           })
 

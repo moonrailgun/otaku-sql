@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import LocalStorage from '../action/localStorage';
+import SqlTableList from './page/SqlTableList';
 
 class Sidebar extends Component {
   constructor(props) {
@@ -20,16 +21,20 @@ class Sidebar extends Component {
   _handleConnectDatabase(connectName, databaseName) {
     this.setState({
       currentSelectedDatabaseName: databaseName
-    })
-    console.log(connectName);
-    console.log(databaseName);
+    });
+
+    this.props.onChangeContentPage(
+      <SqlTableList
+        onChangeContentPage = {this.props.onChangeContentPage}
+        connectName = {connectName}
+        databaseName = {databaseName} />
+    );
   }
 
   _handleClick(index) {
     this.setState({
       currentSelected: index
     });
-    this.props.onChangeContentPage({test: "123"});
   }
 
   _getSidebarList() {
