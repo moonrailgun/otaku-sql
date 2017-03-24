@@ -1,37 +1,60 @@
 import React, { Component, PropTypes } from 'react';
+import LocalStorage from '../action/localStorage';
 
 class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentSelected: 0
+      currentSelected: 0,
+      currentSelectedDatabaseName: "",
+      sidebarList: LocalStorage.getConnections()
     }
+  }
+
+  updateSidebarList() {
+    this.setState({
+      sidebarList: LocalStorage.getConnections()
+    })
+  }
+
+  _handleConnectDatabase(connectName, databaseName) {
+    this.setState({
+      currentSelectedDatabaseName: databaseName
+    })
+    console.log(connectName);
+    console.log(databaseName);
   }
 
   _handleClick(index) {
     this.setState({
       currentSelected: index
     });
-    this.props.handleChangeContentPage({test: "123"});
+    this.props.onChangeContentPage({test: "123"});
   }
 
   _getSidebarList() {
-    const list = this.props.databaseList;
+    const list = this.state.sidebarList;
 
     return list.map((item, index) => {
       const isActive = this.state.currentSelected == index ? "sidebar-nav-sub-title active" : "sidebar-nav-sub-title";
+      const sublist = item.databases.map((subitem, subindex) => {
+        const isDatabaseSelected = this.state.currentSelectedDatabaseName == subitem ? "active" : "";
+        return (
+          <li key={index+"-"+subindex} className="sidebar-nav-link">
+            <a className={isDatabaseSelected} onClick={this._handleConnectDatabase.bind(this, item.name, subitem)}>
+              <i className="am-icon-database sidebar-nav-link-logo"></i> {subitem}
+            </a>
+          </li>
+        )
+      })
       return (
         <li key={index} className="sidebar-nav-link">
           <a className={isActive} onClick={this._handleClick.bind(this, index)}>
-            <i className={"am-icon-" + item.icon + " sidebar-nav-link-logo"}></i> {item.name}
+            <i className={"am-icon-link sidebar-nav-link-logo"}></i> {item.name}
             <span className="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
           </a>
           <ul className="sidebar-nav sidebar-nav-sub" style={{display: "none"}}>
-            <li className="sidebar-nav-link">
-              <a>
-                <span className="am-icon-table sidebar-nav-link-logo"></span> 数据表
-              </a>
-            </li>
+            {sublist}
           </ul>
         </li>
       )
@@ -61,8 +84,7 @@ class Sidebar extends Component {
   }
 };
 Sidebar.propTypes = {
-  handleChangeContentPage: PropTypes.func,
-  databaseList: PropTypes.array
+  onChangeContentPage: PropTypes.func
 }
 
 export default Sidebar;

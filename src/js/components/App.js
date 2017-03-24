@@ -19,19 +19,12 @@ class App extends Component {
   }
 
   render() {
-    const databaseList = [
-      {name: "首页", icon: "database"},
-      {name: "首页", icon: "database"},
-      {name: "首页", icon: "database"}
-    ]
-
     return (
       <div className="am-g tpl-g">
         <Header />
         <Skiner />
         <Sidebar
-          databaseList = {databaseList}
-          handleChangeContentPage = {this._changeContentPage} />
+          onChangeContentPage = {this._changeContentPage} />
         <Content>
           {this.state.contentPage}
         </Content>

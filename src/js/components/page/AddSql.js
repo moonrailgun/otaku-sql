@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import SqlManager from '../../action/sqlManager';
+import LocalStorage from '../../action/localStorage';
 
 //风格切换
 class AddSql extends Component {
@@ -34,9 +35,9 @@ class AddSql extends Component {
           return;
         }
 
-        console.log(id);
+        console.log("connected as id:" + id);
         swal({
-          title: "成功!",
+          title: "连接测试通过!",
           text: "可以成功链接到远程服务器",
           type: "success",
           confirmButtonText: "确认"
@@ -46,13 +47,23 @@ class AddSql extends Component {
   }
 
   _handleSubmit() {
+    const connectName = this.refs.connectName.value;
     const host = this.refs.host.value || "127.0.0.1";
     const port = this.refs.port.value || "3306";
     const username = this.refs.username.value || "root";
     const password = this.refs.password.value || "";
 
+    if(!connectName){
+      swal({
+        title: "链接名不能为空!",
+        type: "warning",
+        confirmButtonText: "确认"
+      });
+      return;
+    }
+
     if(host && port && username){
-      console.log(host + "|" +port+"|" +username+"|" +password);
+      console.log(host + "|" + port+"|" + username+"|" + password);
 
       SqlManager.getDatabases({
         host:host,
@@ -61,9 +72,30 @@ class AddSql extends Component {
         password:password
       }, function(results){
         if(typeof(results) == "object"){
+          let databases = [];
           results.map(function(item, index){
-            console.log(item.Database);
+            // console.log(item.Database);
+            databases.push(item.Database);
+          });
+
+          LocalStorage.addConnection({
+            name: connectName,
+            databases: databases
           })
+
+          swal({
+            title: "数据库添加成功!",
+            type: "success",
+            confirmButtonText: "确认"
+          });
+        }else{
+          console.warn(results);
+          swal({
+            title: "数据库添加失败!",
+            text: "返回了未知的结果:" + JSON.stringify(results),
+            type: "error",
+            confirmButtonText: "确认"
+          });
         }
       })
     }
@@ -75,8 +107,8 @@ class AddSql extends Component {
         <div className="container-fluid am-cf">
           <div className="row">
             <div className="am-u-sm-12 am-u-md-12 am-u-lg-9">
-              <div className="page-header-heading"><span className="am-icon-home page-header-heading-icon"></span> 添加数据库 <small>MySQL</small></div>
-              <p className="page-header-description">添加数据库</p>
+              <div className="page-header-heading"><span className="am-icon-home page-header-heading-icon"></span> 添加数据库链接 <small>MySQL</small></div>
+              <p className="page-header-description">添加数据库链接</p>
             </div>
           </div>
         </div>
@@ -85,7 +117,7 @@ class AddSql extends Component {
             <div className="am-u-sm-12 am-u-md-12 am-u-lg-12">
               <div className="widget am-cf">
                 <div className="widget-head am-cf">
-                  <div className="widget-title am-fl">数据库信息</div>
+                  <div className="widget-title am-fl">数据库链接信息</div>
                 </div>
                 <div className="widget-body am-fr">
                   <form className="am-form tpl-form-line-form">

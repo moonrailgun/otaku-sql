@@ -4,7 +4,7 @@ var path = require('path');
 module.exports = {
   cache: true,
   target: 'electron',
-  devtool: 'eval-source-map',//生产环境使用source-map
+  devtool: 'source-map',
   entry: {
     main: path.join(__dirname, './src/js/main.js')
   },
