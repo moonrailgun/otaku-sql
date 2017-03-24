@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import SqlManager from '../../action/sqlManager';
 import LocalStorage from '../../action/localStorage';
+import SqlTable from './SqlTable';
 
 class SqlTableList extends Component {
   constructor(props) {
@@ -22,19 +23,26 @@ class SqlTableList extends Component {
     });
   }
 
-  // 数据表操作 - 创建
+  // TODO 数据表操作 - 创建
   _tableCreate(){
     console.log("创建表");
   }
-  // 数据表操作 - 进入
+  // TODO 数据表操作 - 进入
   _tableEnter(tableName) {
-    console.log(tableName);
+    // console.log(tableName);
+    this.props.onChangeContentPage(
+      <SqlTable
+        onChangeContentPage = {this.props.onChangeContentPage}
+        connectName = {this.props.connectName}
+        databaseName = {this.props.databaseName}
+        tableName = {tableName} />
+    )
   }
-  // 数据表操作 - 编辑
+  // TODO 数据表操作 - 编辑
   _tableEdit(tableName) {
     console.log(tableName);
   }
-  // 数据表操作 - 删除
+  // TODO 数据表操作 - 删除
   _tableDelete(tableName) {
     console.log(tableName);
   }
@@ -53,6 +61,7 @@ class SqlTableList extends Component {
     });
   }
 
+  //生成表格html
   _generateTableView(tables) {
     let tableBody = tables.map((item, index) => {
       return (
