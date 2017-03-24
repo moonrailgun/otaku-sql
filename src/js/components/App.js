@@ -23,10 +23,9 @@ class App extends Component {
   render() {
     return (
       <div className="am-g tpl-g">
-        <Header />
+        <Header onChangeContentPage = {this._changeContentPage.bind(this)}/>
         <Skiner />
-        <Sidebar
-          onChangeContentPage = {this._changeContentPage.bind(this)} />
+        <Sidebar onChangeContentPage = {this._changeContentPage.bind(this)} />
         <Content>
           {this.state.contentPage}
         </Content>

@@ -1,8 +1,15 @@
 import React, { Component, PropTypes } from 'react';
+import AddSql from './page/AddSql';
 
 class Header extends Component {
   constructor(props) {
     super(props);
+  }
+
+  _addSql() {
+    this.props.onChangeContentPage(
+      <AddSql />
+    )
   }
 
   render() {
@@ -37,7 +44,7 @@ class Header extends Component {
                 {/*弹出列表*/}
                 <ul className="am-dropdown-content tpl-dropdown-content">
                   <li className="tpl-dropdown-menu-notifications">
-                    <a href="javascript:;" className="tpl-dropdown-menu-notifications-item am-cf">
+                    <a onClick={this._addSql.bind(this)} className="tpl-dropdown-menu-notifications-item am-cf">
                       <div className="tpl-dropdown-menu-notifications-title">
                         <i className="am-icon-database"></i>
                         <span> MySql数据库</span>
@@ -59,5 +66,8 @@ class Header extends Component {
     );
   }
 };
+Header.propTypes = {
+  onChangeContentPage: PropTypes.func
+}
 
 export default Header;
