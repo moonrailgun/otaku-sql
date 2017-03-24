@@ -23,11 +23,24 @@ class AddSql extends Component {
         password:password
       }, function(err, id){
         if(err){
-          console.log(err.stack.split("\n")[0]);
+          let errmsg = err.stack.split("\n")[0];
+          console.log(errmsg);
+          swal({
+            title: "失败!",
+            text: errmsg,
+            type: "error",
+            confirmButtonText: "确认"
+          });
           return;
         }
 
         console.log(id);
+        swal({
+          title: "成功!",
+          text: "可以成功链接到远程服务器",
+          type: "success",
+          confirmButtonText: "确认"
+        });
       })
     }
   }
