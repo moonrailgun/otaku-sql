@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 
-//风格切换
 class Sidebar extends Component {
   constructor(props) {
     super(props);
@@ -20,12 +19,20 @@ class Sidebar extends Component {
     const list = this.props.databaseList;
 
     return list.map((item, index) => {
-      const isActive = this.state.currentSelected == index ? "active" : "";
+      const isActive = this.state.currentSelected == index ? "sidebar-nav-sub-title active" : "sidebar-nav-sub-title";
       return (
         <li key={index} className="sidebar-nav-link">
           <a className={isActive} onClick={this._handleClick.bind(this, index)}>
             <i className={"am-icon-" + item.icon + " sidebar-nav-link-logo"}></i> {item.name}
+            <span className="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
           </a>
+          <ul className="sidebar-nav sidebar-nav-sub" style={{display: "none"}}>
+            <li className="sidebar-nav-link">
+              <a>
+                <span className="am-icon-table sidebar-nav-link-logo"></span> 数据表
+              </a>
+            </li>
+          </ul>
         </li>
       )
     })
