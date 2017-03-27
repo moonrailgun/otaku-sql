@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import SqlManager from '../../action/sqlManager';
 import LocalStorage from '../../action/localStorage';
+import {showError} from '../../common/utils';
 
 //风格切换
 class AddSql extends Component {
@@ -24,14 +25,7 @@ class AddSql extends Component {
         password:password
       }, function(err, id){
         if(err){
-          let errmsg = err.stack.split("\n")[0];
-          console.log(errmsg);
-          swal({
-            title: "失败!",
-            text: errmsg,
-            type: "error",
-            confirmButtonText: "确认"
-          });
+          showError(err);
           return;
         }
 
@@ -71,7 +65,7 @@ class AddSql extends Component {
         password:password
       }
 
-      SqlManager.getDatabases(connectionInfo, function(results){
+      SqlManager.getDatabases(connectionInfo, function(error, results){
         if(typeof(results) == "object"){
           let databases = [];
           results.map(function(item, index){

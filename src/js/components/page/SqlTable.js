@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import LocalStorage from '../../action/localStorage';
 import SqlManager from '../../action/sqlManager';
+import { showError } from '../../common/utils';
 
 class SqlTable extends Component {
   constructor(props) {
@@ -50,7 +51,12 @@ class SqlTable extends Component {
       this.props.tableName,
       this.state.limit,
       this.state.page,
-      (results) => {
+      (err, results) => {
+        if(err){
+          showError(err);
+          return;
+        }
+
         console.log(results);
 
         const field = this._getTableField(results);

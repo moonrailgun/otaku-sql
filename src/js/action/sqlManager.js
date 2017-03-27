@@ -89,9 +89,10 @@ class SqlManager {
       connection.connect();
 
       connection.query('SHOW DATABASES', function (error, results, fields) {
-        if (error) throw error;
-
-        cb(results);
+        if(error){
+          cb(error, null);
+        }
+        cb(null, results);
       });
 
       connection.end();
@@ -120,10 +121,11 @@ class SqlManager {
       connection.connect();
 
       connection.query('SHOW TABLES', function (error, results, fields) {
-        if (error) throw error;
-        // console.log('The solution is: ', results[0].solution);
+        if (error){
+          cb(error, null);
+        }
 
-        cb(results);
+        cb(null, results);
       });
 
       connection.end();
@@ -153,10 +155,11 @@ class SqlManager {
 
       let command = 'SELECT * FROM ' + tableName + ' LIMIT ' + (page-1)*limit + ',' + limit;
       connection.query(command, function (error, results, fields) {
-        if (error) throw error;
-        // console.log('The solution is: ', results[0].solution);
+        if (error){
+          cb(error, null);
+        }
 
-        cb(results);
+        cb(null, results);
       });
 
       connection.end();

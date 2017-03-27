@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import SqlManager from '../../action/sqlManager';
 import LocalStorage from '../../action/localStorage';
 import SqlTable from './SqlTable';
+import {showError} from '../../common/utils';
 
 class SqlTableList extends Component {
   constructor(props) {
@@ -51,7 +52,12 @@ class SqlTableList extends Component {
     let info = LocalStorage.getConnectInfo(this.props.connectName);
     info.database = this.props.databaseName;
 
-    SqlManager.getTables(info, (results) => {
+    SqlManager.getTables(info, (err, results) => {
+      if(err){
+        showError(err);
+        return;
+      }
+
       let tables = [];
       for (var i = 0; i < results.length; i++) {
         const item = results[i];
