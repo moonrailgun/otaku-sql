@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import LocalStorage from '../../action/localStorage';
 import SqlManager from '../../action/sqlManager';
 import { showError } from '../../common/utils';
+import EditableTableCell from '../EditableTableCell';
 
 class SqlTable extends Component {
   constructor(props) {
@@ -65,7 +66,11 @@ class SqlTable extends Component {
         });
         const tableBody = results.map((row, index) => {
           const rowHtml = this._getTableRowWithField(row, field).map((_sub, i) => {
-            return ( <td key={i+"-"+_sub}>{_sub}</td> )
+            return (
+              <EditableTableCell
+                key={i+"-"+_sub}
+                value={_sub} />
+            )
           });
           return (
             <tr key={index + "-row"}>
