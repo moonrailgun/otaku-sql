@@ -9,4 +9,15 @@ let showError = (err) => {
   });
 }
 
-export { showError }
+let tableStructure = {
+  getTablePrimaryKeyField: function(structure) {
+    for (var i = 0; i < structure.length; i++) {
+      let row = structure[i];
+      if(row["Key"] && row["Key"] == "PRI") {
+        return row["Field"];
+      }
+    }
+  }
+}
+
+export { showError, tableStructure }

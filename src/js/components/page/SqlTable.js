@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import LocalStorage from '../../action/localStorage';
 import SqlManager from '../../action/sqlManager';
-import { showError } from '../../common/utils';
+import { showError, tableStructure } from '../../common/utils';
 import EditableTableCell from '../EditableTableCell';
 
 class SqlTable extends Component {
@@ -57,8 +57,7 @@ class SqlTable extends Component {
           showError(err);
           return;
         }
-
-        console.log(results);
+        // console.log(results);
 
         const field = this._getTableField(results);
         const tableHeader = field.map((item, index) => {
@@ -69,7 +68,7 @@ class SqlTable extends Component {
             return (
               <EditableTableCell
                 key={i+"-"+_sub}
-                value={_sub} />
+                value={String(_sub)} />
             )
           });
           return (
@@ -96,6 +95,17 @@ class SqlTable extends Component {
         });
       }
     );
+
+    SqlManager.getTableStructure(info,this.props.tableName,(err, structure) => {
+      if(err){
+        showError(err);
+        return;
+      }
+
+      // console.log(structure);
+      const primaryKey = tableStructure.getTablePrimaryKeyField(structure);
+      console.log("primaryKey:" + primaryKey);
+    });
   }
 
   render() {

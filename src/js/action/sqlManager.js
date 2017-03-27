@@ -8,7 +8,7 @@ class SqlManager {
 
   //TODO 未完成
   static getEstablishConnect(sqlInfo) {
-    
+
   }
 
   // 数据库链接测试
@@ -76,6 +76,17 @@ class SqlManager {
   // 获取某个数据库中数据表列表
   static getTables(sqlInfo, cb){
     SqlManager.query(sqlInfo, 'SHOW TABLES', function(error, results, fields){
+      if (error){
+        cb(error, null);
+      }
+      cb(null, results);
+    });
+  }
+
+  // 获取表结构
+  static getTableStructure(sqlInfo, tableName, cb){
+    let query = 'DESCRIBE ' + tableName;
+    SqlManager.query(sqlInfo, query, function(error, results, fields){
       if (error){
         cb(error, null);
       }
