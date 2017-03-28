@@ -23,6 +23,8 @@
     "babel-preset-react": "^6.23.0",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.4.1",
     "gulp-sync": "^0.1.4",
     "gulp-util": "^3.0.8",
     "gulp-watch": "^4.3.11",
