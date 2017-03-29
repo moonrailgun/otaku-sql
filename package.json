@@ -4,7 +4,9 @@
   "description": "a electron app for operate mysql",
   "main": "./app/entry.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron .",
+    "build": "gulp",
+    "watch": "gulp watch"
   },
   "repository": {
     "type": "git",

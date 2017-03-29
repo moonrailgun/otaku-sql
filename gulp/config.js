@@ -9,7 +9,7 @@ module.exports = {
   sass: {
     all: src + "/sass/**/*.scss",
     src: src + "/sass/*.scss",
-    dest: dest + "/css",
+    dest: dest + "/assets/css",
     settings: {}
   },
   js: {

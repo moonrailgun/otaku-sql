@@ -12,6 +12,10 @@ class Header extends Component {
     )
   }
 
+  _quitApp() {
+    console.log("exit...");
+  }
+
   render() {
     return (
       <header>
@@ -54,8 +58,8 @@ class Header extends Component {
                 </ul>
               </li>
 
-              <li className="am-text-sm">
-                <a href="javascript:;">
+              <li className="am-text-sm" onClick={this._quitApp.bind(this)}>
+                <a>
                   <span className="am-icon-sign-out"></span> 退出
                 </a>
               </li>

@@ -77,6 +77,7 @@ class EditableTableCell extends Component {
   render() {
     return (
       <td
+        className="editable-table-cell"
         style={this.state.isChange?{'background-color':'rgba(255,0,0,.3)'}:{}}>
         {this.generateCell()}
       </td>
