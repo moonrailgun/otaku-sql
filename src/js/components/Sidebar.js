@@ -22,9 +22,11 @@ class Sidebar extends Component {
     this.setState({
       currentSelectedDatabaseName: databaseName
     });
+    this.props.onChangeDatabase(connectName, databaseName);
 
     this.props.onChangeContentPage(
       <SqlTableList
+        key = {Math.random()}
         onChangeContentPage = {this.props.onChangeContentPage}
         connectName = {connectName}
         databaseName = {databaseName} />
@@ -89,7 +91,8 @@ class Sidebar extends Component {
   }
 };
 Sidebar.propTypes = {
-  onChangeContentPage: PropTypes.func
+  onChangeContentPage: PropTypes.func,
+  onChangeDatabase: PropTypes.func
 }
 
 export default Sidebar;

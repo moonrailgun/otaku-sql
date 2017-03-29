@@ -58,12 +58,14 @@ class SqlTableList extends Component {
         return;
       }
 
-      let tables = [];
-      for (var i = 0; i < results.length; i++) {
-        const item = results[i];
-        tables.push(item['Tables_in_'+this.props.databaseName]);
+      if(results && results.length > 0){
+        let tables = [];
+        for (var i = 0; i < results.length; i++) {
+          const item = results[i];
+          tables.push(item['Tables_in_'+this.props.databaseName]);
+        }
+        cb(this._generateTableView(tables));
       }
-      cb(this._generateTableView(tables));
     });
   }
 

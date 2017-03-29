@@ -96,7 +96,7 @@ class SqlTable extends Component {
       }
     );
 
-    SqlManager.getTableStructure(info,this.props.tableName,(err, structure) => {
+    SqlManager.getTableStructure(info, this.props.tableName, (err, structure) => {
       if(err){
         showError(err);
         return;
