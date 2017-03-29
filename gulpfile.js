@@ -1,6 +1,8 @@
 var gulp = require('gulp');
+var gutil = require('gulp-util');
 var watch = require('gulp-watch');
 var gulpsync = require('gulp-sync')(gulp);
+var packager = require('electron-packager');
 var config = require('./gulp/config');
 var requireDir = require('require-dir');
 requireDir('./gulp/tasks', { recurse: true});
@@ -31,3 +33,22 @@ gulp.task('watch', gulpsync.sync(
     });
   }
 );
+
+gulp.task('deploy', function(cb) {
+  packager(config.deploy.current.settings, function(err, appPaths){
+    if (err) {
+      throw new gutil.PluginError('deploy', err);
+    }
+    gutil.log('[deploy]', appPaths);
+    cb();
+  })
+});
+gulp.task('deploy-all', function(cb) {
+  packager(config.deploy.all.settings, function(err, appPaths){
+    if (err) {
+      throw new gutil.PluginError('deploy', err);
+    }
+    gutil.log('[deploy]', appPaths);
+    cb();
+  })
+});

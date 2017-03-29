@@ -26,5 +26,23 @@ module.exports = {
   html: {
     src: src + "/html/**/*",
     dest: dest
+  },
+  deploy: {
+    //https://github.com/electron-userland/electron-packager/blob/master/docs/api.md
+    current:{
+      settings: {
+        dir: "./"
+      }
+    },
+    all:{
+      settings: {
+        dir: "./",
+        all: true,
+        appCopyright: "moonrailgun",
+        appVersion: require("../package.json").version,
+        asar: true,
+        out: "./dest/"
+      }
+    }
   }
 }
