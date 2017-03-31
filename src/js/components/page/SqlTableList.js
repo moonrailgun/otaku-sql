@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import SqlManager from '../../action/sqlManager';
 import LocalStorage from '../../action/localStorage';
 import SqlTable from './SqlTable';
+import NewTable from './NewTable';
 import {showError} from '../../common/utils';
 
 class SqlTableList extends Component {
@@ -26,7 +27,13 @@ class SqlTableList extends Component {
 
   // TODO 数据表操作 - 创建
   _tableCreate(){
-    console.log("创建表");
+    this.props.onChangeContentPage(
+      <NewTable
+        onChangeContentPage = {this.props.onChangeContentPage}
+        connectName = {this.props.connectName}
+        databaseName = {this.props.databaseName}
+         />
+    )
   }
   // TODO 数据表操作 - 进入
   _tableEnter(tableName) {

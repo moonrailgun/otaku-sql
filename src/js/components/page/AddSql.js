@@ -3,7 +3,6 @@ import SqlManager from '../../action/sqlManager';
 import LocalStorage from '../../action/localStorage';
 import {showError} from '../../common/utils';
 
-//风格切换
 class AddSql extends Component {
   constructor(props) {
     super(props);
