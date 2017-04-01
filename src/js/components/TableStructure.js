@@ -24,13 +24,24 @@ class TableStructure extends Component {
     }
   }
 
-  _changeField(e) {
+  _updateField(index, field, value){
+    if( index != undefined && field != undefined && value != undefined ){
+      let tableField = this.state.tableField;
+      tableField[index][field] = value;
+      this.setState({
+        tableField: tableField
+      })
+    }else{
+      console.warn("[_updateField]参数不全:("+index+","+field+","+value+")");
+    }
+  }
+
+  _handleChangeField(e) {
     let field = e.target.dataset.field;
     let fieldIndex = e.target.dataset.fieldIndex;
     let type = e.target.type;
     if(type == "text"){
-      let tableField = this.state.tableField;
-      tableField[fieldIndex][field] = e.target.value;
+      this._updateField(fieldIndex, field, e.target.value);
     }else if(type == "checkbox"){
       console.log(e.target.checked);
     }
@@ -39,7 +50,7 @@ class TableStructure extends Component {
   render() {
     console.log("render TableStructure");
     return (
-      <tbody>
+      <tbody className="table-structure">
         {
           this.state.tableField.map((item, index) => {
             return (
@@ -50,13 +61,13 @@ class TableStructure extends Component {
                     data-field="_name"
                     data-field-index={index}
                     value={item._name}
-                    onChange={this._changeField.bind(this)} />
+                    onChange={this._handleChangeField.bind(this)} />
                 </td>
                 <td>
                   <FieldTypeSelect
                     field="_type"
                     fieldIndex={index}
-                    onChange={this._changeField.bind(this)}/>
+                    onChange={this._updateField.bind(this)}/>
                 </td>
                 <td>
                   <input
@@ -64,7 +75,7 @@ class TableStructure extends Component {
                     data-field="_length"
                     data-field-index={index}
                     value={item._length}
-                    onChange={this._changeField.bind(this)} />
+                    onChange={this._handleChangeField.bind(this)} />
                 </td>
                 <td>
                   <input
@@ -72,7 +83,7 @@ class TableStructure extends Component {
                     data-field="_decimals"
                     data-field-index={index}
                     value={item._decimals}
-                    onChange={this._changeField} />
+                    onChange={this._handleChangeField} />
                 </td>
                 <td>
                   <input
@@ -80,7 +91,7 @@ class TableStructure extends Component {
                     data-field="_isNotNull"
                     data-field-index={index}
                     checked={item._isNotNull ? "checked" : "unchecked"}
-                    onChange={this._changeField} />
+                    onChange={this._handleChangeField} />
                 </td>
                 <td>
                   <input
@@ -88,7 +99,7 @@ class TableStructure extends Component {
                     data-field="_isPrimKey"
                     data-field-index={index}
                     checked={item._isPrimKey ? "checked" : "unchecked"}
-                    onChange={this._changeField} />
+                    onChange={this._handleChangeField} />
                 </td>
               </tr>
             )

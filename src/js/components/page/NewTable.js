@@ -47,7 +47,7 @@ class NewTable extends Component{
             <div className="am-u-sm-12 am-u-md-12 am-u-lg-12">
               <div className="widget am-cf">
                 <div className="widget-body am-fr">
-                  <div className="am-scrollable-horizontal am-u-sm-12">
+                  <div className="am-u-sm-12">
                     <table className="am-table am-table-compact am-table-bordered am-table-centered am-text-nowrap tpl-table-black ">
                       <thead>
                         <tr>

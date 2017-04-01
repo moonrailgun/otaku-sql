@@ -1,0 +1,33 @@
+.table-structure-table{
+
+}
+
+.table-structure{
+  td{
+    padding: 0;
+    vertical-align: middle;
+    input[type="text"]{
+      padding: 7px 6px;
+      background-color: transparent;
+      color: #fff;
+      border: 0;
+
+      &:focus{
+        outline: 0;
+      }
+    }
+
+    .am-dropdown{
+      width:100%;
+    }
+  }
+
+  .theme-black & .am-btn-default{
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .theme-black & .am-selected-text{
+    color: #888;
+  }
+}
