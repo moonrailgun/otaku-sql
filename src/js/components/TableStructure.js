@@ -28,9 +28,12 @@ class TableStructure extends Component {
     let field = e.target.dataset.field;
     let fieldIndex = e.target.dataset.fieldIndex;
     let type = e.target.type;
-    console.log(type);
-    console.log(fieldIndex);
-    console.log(field);
+    if(type == "text"){
+      let tableField = this.state.tableField;
+      tableField[fieldIndex][field] = e.target.value;
+    }else if(type == "checkbox"){
+      console.log(e.target.checked);
+    }
   }
 
   render() {
@@ -43,29 +46,29 @@ class TableStructure extends Component {
               <tr key={"tableStructure-row-" + index}>
                 <td>
                   <input
-                    type="input"
+                    type="text"
                     data-field="_name"
                     data-field-index={index}
                     value={item._name}
-                    onChange={this._changeField} />
+                    onChange={this._changeField.bind(this)} />
                 </td>
                 <td>
                   <FieldTypeSelect
                     field="_type"
                     fieldIndex={index}
-                    onChange={this._changeField}/>
+                    onChange={this._changeField.bind(this)}/>
                 </td>
                 <td>
                   <input
-                    type="input"
+                    type="text"
                     data-field="_length"
                     data-field-index={index}
                     value={item._length}
-                    onChange={this._changeField} />
+                    onChange={this._changeField.bind(this)} />
                 </td>
                 <td>
                   <input
-                    type="input"
+                    type="text"
                     data-field="_decimals"
                     data-field-index={index}
                     value={item._decimals}
