@@ -12,7 +12,8 @@ module.exports = {
     path: path.join(__dirname, './app'),
     filename: 'assets/js/[name].js',
     chunkFilename: 'assets/js/[chunkhash].js',
-    sourceMapFilename: 'assets/js/[name].map'
+    sourceMapFilename: 'assets/js/[name].map',
+    libraryTarget: 'var'
   },
   node: {
     __dirname: false
@@ -25,5 +26,9 @@ module.exports = {
         loader: 'babel-loader'
       }
     ]
+  },
+  externals: {
+    'react': 'React',
+    'react-dom': 'ReactDOM'
   }
 }
