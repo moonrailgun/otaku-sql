@@ -13,6 +13,11 @@ class NewTable extends Component{
         title: "表名不能为空",
         type: "error"
       });
+    }else{
+      let tableField = this.refs.tableBody.state.tableField;
+      if(!!tableField){
+        console.log(tableField);
+      }
     }
   }
 
@@ -54,12 +59,12 @@ class NewTable extends Component{
                           <th>字段名</th>
                           <th>类型</th>
                           <th>长度</th>
-                          <th>精度</th>
+                          <th>默认值</th>
                           <th>是否非空</th>
                           <th>主键</th>
                         </tr>
                       </thead>
-                      <TableStructure />
+                      <TableStructure ref="tableBody" />
                     </table>
                   </div>
                 </div>

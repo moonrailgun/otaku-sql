@@ -324,7 +324,7 @@ ul.tpl-dropdown-content .tpl-dropdown-menu-messages-item .menu-messages-content 
 }
 .sidebar-nav-sub .sidebar-nav-link a {
   font-size: 12px;
-  padding-left: 0;
+  /*padding-left: 0;*/
 }
 .sidebar-nav-sub .sidebar-nav-link-logo {
   margin-right: 8px;

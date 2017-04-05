@@ -8,17 +8,19 @@ class TableStructure extends Component {
       tableField: [
         {
           _name: "",
+          _type: "varchar",
           _length: 255,
-          _decimals: "",
+          _default: "",
           _isNotNull: false,
           _isPrimKey: false
         },
         {
           _name: "",
+          _type: "varchar",
           _length: 255,
-          _decimals: "",
-          _isNotNull: false,
-          _isPrimKey: false
+          _default: "",
+          _isNotNull: true,
+          _isPrimKey: true
         }
       ]
     }
@@ -44,11 +46,14 @@ class TableStructure extends Component {
       this._updateField(fieldIndex, field, e.target.value);
     }else if(type == "checkbox"){
       console.log(e.target.checked);
+      this._updateField(fieldIndex, field, e.target.checked);
     }
   }
 
   render() {
     console.log("render TableStructure");
+    console.log(this.state);
+
     return (
       <tbody className="table-structure">
         {
@@ -80,26 +85,26 @@ class TableStructure extends Component {
                 <td>
                   <input
                     type="text"
-                    data-field="_decimals"
+                    data-field="_default"
                     data-field-index={index}
-                    value={item._decimals}
-                    onChange={this._handleChangeField} />
+                    value={item._default}
+                    onChange={this._handleChangeField.bind(this)} />
                 </td>
                 <td>
                   <input
                     type="checkbox"
                     data-field="_isNotNull"
                     data-field-index={index}
-                    checked={item._isNotNull ? "checked" : "unchecked"}
-                    onChange={this._handleChangeField} />
+                    checked={item._isNotNull}
+                    onChange={this._handleChangeField.bind(this)} />
                 </td>
                 <td>
                   <input
                     type="checkbox"
                     data-field="_isPrimKey"
                     data-field-index={index}
-                    checked={item._isPrimKey ? "checked" : "unchecked"}
-                    onChange={this._handleChangeField} />
+                    checked={item._isPrimKey}
+                    onChange={this._handleChangeField.bind(this)} />
                 </td>
               </tr>
             )
