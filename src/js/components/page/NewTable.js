@@ -1,9 +1,46 @@
 import React, {Component, PropTypes} from 'react';
 import TableStructure from '../TableStructure.js';
+import { tableStructure } from '../../common/utils.js';
 
 class NewTable extends Component{
   constructor(props) {
     super(props);
+  }
+
+  _createQuery(tableName, tableField) {
+    let query = "CREATE TABLE `"+tableName+"` (";
+    // 表结构
+    for (var i = 0; i < tableField.length; i++) {
+      let item = tableField[i];
+      query += "`"+item._name+"` ";
+      query += item._type;
+      if(item._length){
+        query += "("+item._length+")";
+      }
+      if(item._isNotNull){
+        query += " NOT NULL";
+      }else{
+        query += " NULL";
+      }
+
+      if(item._default){
+        query += " DEFAULT `" + item._default + "`";
+      }
+
+      if (i != tableField.length - 1){
+        query += ",";
+      }
+    }
+
+    // 主键
+    let primaryKey = tableStructure.getTablePrimaryKeyField(tableField);
+    if(primaryKey) {
+      query += ",PRIMARY KEY (`"+primaryKey+"`)";
+    }
+
+    query += ");";
+
+    return query;
   }
 
   _saveTable(){
@@ -17,6 +54,7 @@ class NewTable extends Component{
       let tableField = this.refs.tableBody.state.tableField;
       if(!!tableField){
         console.log(tableField);
+        console.log(this._createQuery(tableName, tableField));
       }
     }
   }
