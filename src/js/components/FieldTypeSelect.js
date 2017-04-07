@@ -4,19 +4,56 @@ import Dropdown from './Dropdown';
 class FieldTypeSelect extends Dropdown {
   constructor(props) {
     super(props);
+    this.showSearch = true;
     this.option = [
+      "tinyint",
+      "smallint",
+      "mediumint",
+      "int",
+      "integer",
+      "bigint",
+      "bit",
+      "real",
+      "double",
+      "float",
+      "decimal",
+      "numeric",
+      "char",
       "varchar",
-      "int"
+      "date",
+      "time",
+      "year",
+      "timestamp",
+      "datetime",
+      "tinyblob",
+      "blob",
+      "mediumblob",
+      "longblob",
+      "tinytext",
+      "text",
+      "mediumtext",
+      "longtext",
+      "enum",
+      "set",
+      "binary",
+      "varbinary",
+      "point",
+      "linestring",
+      "polygon",
+      "geometry",
+      "multipoint",
+      "multilinestring",
+      "multipolygon",
+      "geometrycollection",
+      "json"
     ];
   }
 
-  _handleClick(index) {
+  _handleChange(e){
     const field = this.props.field;
     const fieldIndex = this.props.fieldIndex;
-    this.setState({
-      currentIndex: index
-    });
-    this.props.onChange(fieldIndex, field, this.option[index]);
+    let value = e.target.value;
+    this.props.onChange(fieldIndex, field, value);
   }
 };
 FieldTypeSelect.propTypes = {

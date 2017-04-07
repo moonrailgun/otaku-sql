@@ -1,5 +1,6 @@
-.table-structure-table{
-
+.theme-black .am-form-field{
+  border-bottom-color: #c2cad8;
+  color: #888;
 }
 
 .table-structure{
@@ -20,6 +21,10 @@
     .am-dropdown{
       width:100%;
     }
+    .am-active>.am-dropdown-content::-webkit-scrollbar{
+      background-color:#fff;
+    }
+
   }
 
   .theme-black & .am-btn-default{
