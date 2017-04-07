@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import LocalStorage from '../../action/localStorage';
 import SqlManager from '../../action/sqlManager';
-import { showError, tableStructure } from '../../common/utils';
+import { showError, tableStructureHelper } from '../../common/utils';
 import EditableTableCell from '../EditableTableCell';
 
 class SqlTable extends Component {
@@ -103,7 +103,7 @@ class SqlTable extends Component {
       }
 
       // console.log(structure);
-      const primaryKey = tableStructure.getTablePrimaryKeyField(structure);
+      const primaryKey = tableStructureHelper.getTablePrimaryKeyField(structure);
       console.log("primaryKey:" + primaryKey);
     });
   }

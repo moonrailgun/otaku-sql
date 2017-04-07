@@ -1,10 +1,19 @@
 import React, {Component, PropTypes} from 'react';
 import TableStructure from '../TableStructure.js';
-import { tableStructure } from '../../common/utils.js';
 
 class NewTable extends Component{
   constructor(props) {
     super(props);
+  }
+
+  _checkField(tableField) {
+    for (var i = 0; i < tableField.length; i++) {
+      let item = tableField[i];
+      if(item._name == ""){
+        return false;
+      }
+    }
+    return true;
   }
 
   _createQuery(tableName, tableField) {
@@ -32,10 +41,15 @@ class NewTable extends Component{
       }
     }
 
-    // 主键
-    let primaryKey = tableStructure.getTablePrimaryKeyField(tableField);
-    if(primaryKey) {
-      query += ",PRIMARY KEY (`"+primaryKey+"`)";
+    //主键
+    let primaryKeyList = [];
+    for (var i = 0; i < tableField.length; i++) {
+      if(tableField[i]._isPrimKey === true) {
+        primaryKeyList.push(tableField[i]._name);
+      }
+    }
+    if(primaryKeyList.length > 0){
+      query += ",PRIMARY KEY ("+ primaryKeyList.join(",") +")";
     }
 
     query += ");";
@@ -53,8 +67,14 @@ class NewTable extends Component{
     }else{
       let tableField = this.refs.tableBody.state.tableField;
       if(!!tableField){
-        console.log(tableField);
-        console.log(this._createQuery(tableName, tableField));
+        if(this._checkField(tableField)) {
+          console.log(this._createQuery(tableName, tableField));
+        }else{
+          swal({
+            title: "字段名不能为空",
+            type: "error"
+          });
+        }
       }
     }
   }

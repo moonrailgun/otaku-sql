@@ -18,7 +18,7 @@ class Dropdown extends Component {
   }
 
   render() {
-    console.log("render FieldTypeSelect");
+    // console.log("render FieldTypeSelect");
     return (
       <div className="am-dropdown">
         <button className="am-selected-btn am-btn am-dropdown-toggle am-btn-default" data-am-dropdown-toggle>{this.option[this.state.currentIndex]}&nbsp;

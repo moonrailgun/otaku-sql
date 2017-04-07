@@ -9,7 +9,8 @@ let showError = (err) => {
   });
 }
 
-let tableStructure = {
+//structure: SqlManager.getTableStructure返回的数据
+let tableStructureHelper = {
   getTablePrimaryKeyField: function(structure) {
     for (var i = 0; i < structure.length; i++) {
       let row = structure[i];
@@ -20,4 +21,4 @@ let tableStructure = {
   }
 }
 
-export { showError, tableStructure }
+export { showError, tableStructureHelper }

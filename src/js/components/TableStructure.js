@@ -45,15 +45,11 @@ class TableStructure extends Component {
     if(type == "text"){
       this._updateField(fieldIndex, field, e.target.value);
     }else if(type == "checkbox"){
-      console.log(e.target.checked);
       this._updateField(fieldIndex, field, e.target.checked);
     }
   }
 
   render() {
-    console.log("render TableStructure");
-    console.log(this.state);
-
     return (
       <tbody className="table-structure">
         {

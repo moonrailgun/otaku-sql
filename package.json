@@ -4,7 +4,7 @@
   "description": "a electron app for operate mysql",
   "main": "./app/entry.js",
   "scripts": {
-    "start": "electron .",
+    "start": "gulp && electron .",
     "build": "gulp",
     "watch": "gulp watch",
     "deploy": "gulp deploy",
