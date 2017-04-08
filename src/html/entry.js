@@ -65,7 +65,7 @@ function createWindow() {
     width: 1170,
     height: 680,
     // frame: false,
-    transparent: true,
+    // transparent: true,
     icon: path.join(__dirname, './assets/images/icon/128.png'),
   });
   mainWindow.loadURL(`file://${__dirname}/index.html`);
