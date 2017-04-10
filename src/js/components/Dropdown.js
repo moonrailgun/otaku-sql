@@ -8,14 +8,22 @@ class Dropdown extends Component {
   }
 
   componentDidMount(){
-    // $('.am-dropdown').dropdown();
+    let $select = $(this.refs.select);
     let options = {
       maxHeight: '200px'
     };
     if(this.showSearch){
       options.searchBox = 1;
     }
-    $(this.refs.select).selected(options).on('change', this._handleChange.bind(this))
+    $select.selected(options).on('change', this._handleChange.bind(this))
+
+    if(this.props.value){
+      let index = this.option.indexOf(this.props.value);
+      if(index >= 0){
+        $select.find('option').eq(index).attr('selected', true);
+        $select.trigger('changed.selected.amui');
+      }
+    }
   }
 
   _handleChange(e){
