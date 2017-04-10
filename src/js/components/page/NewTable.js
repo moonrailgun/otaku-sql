@@ -79,8 +79,17 @@ class NewTable extends Component{
     }
   }
 
-  _addField() {
+  _addBlankRow() {
+    console.log("_addBlankRow");
+    this.refs.tableBody.addBlankRow();
+  }
 
+  _reviewQueryCommand() {
+    console.log("_reviewQueryCommand");
+  }
+
+  _deleteCurrentRow() {
+    console.log("_deleteCurrentRow");
   }
 
   render() {
@@ -110,6 +119,17 @@ class NewTable extends Component{
             <div className="am-u-sm-12 am-u-md-12 am-u-lg-12">
               <div className="widget am-cf">
                 <div className="widget-body am-fr">
+                  <div className="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                    <div className="am-form-group">
+                      <div className="am-btn-toolbar">
+                        <div className="am-btn-group am-btn-group-xs">
+                          <button type="button" className="am-btn am-btn-default am-btn-success" onClick={this._addBlankRow.bind(this)}><span className="am-icon-plus"></span> 新增</button>
+                          <button type="button" className="am-btn am-btn-default am-btn-warning" onClick={this._reviewQueryCommand.bind(this)}><span className="am-icon-archive"></span> 预览</button>
+                          <button type="button" className="am-btn am-btn-default am-btn-danger" onClick={this._deleteCurrentRow.bind(this)}><span className="am-icon-trash-o"></span> 删除</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div className="am-u-sm-12">
                     <table className="am-table am-table-compact am-table-bordered am-table-centered am-text-nowrap tpl-table-black ">
                       <thead>

@@ -4,26 +4,25 @@ import FieldTypeSelect from './FieldTypeSelect.js';
 class TableStructure extends Component {
   constructor(props) {
     super(props);
+    this.blankRow = {
+      _name: "",
+      _type: "varchar",
+      _length: "",
+      _default: "",
+      _isNotNull: false,
+      _isPrimKey: false
+    };
     this.state = {
-      tableField: [
-        {
-          _name: "",
-          _type: "varchar",
-          _length: 255,
-          _default: "",
-          _isNotNull: false,
-          _isPrimKey: false
-        },
-        {
-          _name: "",
-          _type: "varchar",
-          _length: 255,
-          _default: "",
-          _isNotNull: true,
-          _isPrimKey: true
-        }
-      ]
-    }
+      tableField: [this.blankRow]
+    };
+  }
+
+  addBlankRow() {
+    let tableField = this.state.tableField;
+    tableField.push(this.blankRow);
+    this.setState({
+      tableField: tableField
+    });
   }
 
   _updateField(index, field, value){
@@ -50,6 +49,7 @@ class TableStructure extends Component {
   }
 
   render() {
+    console.log("render TableStructure");
     return (
       <tbody className="table-structure">
         {
@@ -68,6 +68,7 @@ class TableStructure extends Component {
                   <FieldTypeSelect
                     field="_type"
                     fieldIndex={index}
+                    value={item._type}
                     onChange={this._updateField.bind(this)}/>
                 </td>
                 <td>
