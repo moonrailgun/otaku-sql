@@ -90,6 +90,7 @@ class NewTable extends Component{
 
   _deleteCurrentRow() {
     console.log("_deleteCurrentRow");
+    this.refs.tableBody.deleteCurrentRow();
   }
 
   render() {

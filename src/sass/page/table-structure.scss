@@ -4,28 +4,36 @@
 }
 
 .table-structure{
-  td{
-    padding: 0;
-    vertical-align: middle;
-    input[type="text"]{
-      padding: 7px 6px;
-      background-color: transparent;
-      color: #fff;
-      border: 0;
+  tr{
+    &.active td{
+      border-color: #fff !important;
+    }
 
-      &:focus{
-        outline: 0;
+    td{
+      transition: border-color .5s;
+      padding: 0;
+      vertical-align: middle;
+      input[type="text"]{
+        padding: 7px 6px;
+        background-color: transparent;
+        color: #fff;
+        border: 0;
+
+        &:focus{
+          outline: 0;
+        }
+      }
+
+      .am-dropdown{
+        width:100%;
+      }
+      .am-active>.am-dropdown-content::-webkit-scrollbar{
+        background-color:#fff;
       }
     }
-
-    .am-dropdown{
-      width:100%;
-    }
-    .am-active>.am-dropdown-content::-webkit-scrollbar{
-      background-color:#fff;
-    }
-
   }
+
+
 
   .theme-black & .am-btn-default{
     color: #fff;

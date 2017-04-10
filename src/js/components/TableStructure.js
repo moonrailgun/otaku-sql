@@ -13,16 +13,51 @@ class TableStructure extends Component {
       _isPrimKey: false
     };
     this.state = {
-      tableField: [this.blankRow]
+      tableField: [Object.assign({}, this.blankRow)],
+      currentRowIndex: -1
     };
+  }
+
+  componentDidMount() {
+    let $tableStructure = $(this.refs.tableStructure);
+
+    $tableStructure.on('click', 'td', function(){
+      let childInput = $(this).find("input");
+      if(childInput){
+        childInput.focus();
+      }
+    });
+  }
+
+  // 不选中任意行
+  unselectRow() {
+    this.setState({
+      currentRowIndex: -1
+    })
   }
 
   addBlankRow() {
     let tableField = this.state.tableField;
-    tableField.push(this.blankRow);
+    tableField.push(Object.assign({}, this.blankRow));
     this.setState({
       tableField: tableField
     });
+  }
+
+  deleteCurrentRow() {
+    if(this.state.currentRowIndex >= 0){
+      let tableField = this.state.tableField;
+      tableField.splice(this.state.currentRowIndex, 1);
+      this.unselectRow();
+      this.setState({
+        tableField: tableField
+      });
+    }else{
+      swal({
+        title: "当前未选中任何行",
+        type: "error"
+      })
+    }
   }
 
   _updateField(index, field, value){
@@ -48,14 +83,23 @@ class TableStructure extends Component {
     }
   }
 
+  _handleClickRow(index){
+    this.setState({
+      currentRowIndex: index
+    });
+    // console.log(this.state.currentRowIndex);
+  }
+
   render() {
-    console.log("render TableStructure");
     return (
-      <tbody className="table-structure">
+      <tbody className="table-structure" ref="tableStructure">
         {
           this.state.tableField.map((item, index) => {
             return (
-              <tr key={"tableStructure-row-" + index}>
+              <tr
+                key={"tableStructure-row-" + index}
+                className={index === this.state.currentRowIndex ? "active":""}
+                onClick={this._handleClickRow.bind(this, index)}>
                 <td>
                   <input
                     type="text"
