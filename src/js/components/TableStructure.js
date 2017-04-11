@@ -12,6 +12,7 @@ class TableStructure extends Component {
       _isNotNull: false,
       _isPrimKey: false
     };
+    this.seed = Math.random();
     this.state = {
       tableField: [Object.assign({}, this.blankRow)],
       currentRowIndex: -1
@@ -31,6 +32,7 @@ class TableStructure extends Component {
 
   // 不选中任意行
   unselectRow() {
+    this.seed = Math.random(); //强制更新表格
     this.setState({
       currentRowIndex: -1
     })
@@ -91,13 +93,14 @@ class TableStructure extends Component {
   }
 
   render() {
+    console.log("tableStructure", this.seed);
     return (
       <tbody className="table-structure" ref="tableStructure">
         {
           this.state.tableField.map((item, index) => {
             return (
               <tr
-                key={"tableStructure-row-" + index}
+                key={"tableStructure-" + this.seed + "-row-" + index}
                 className={index === this.state.currentRowIndex ? "active":""}
                 onClick={this._handleClickRow.bind(this, index)}>
                 <td>

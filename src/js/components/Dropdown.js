@@ -31,7 +31,7 @@ class Dropdown extends Component {
   }
 
   render() {
-    // console.log("render FieldTypeSelect");
+    console.log("render Dropdown");
     return (
       <select ref="select">
         {

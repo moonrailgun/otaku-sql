@@ -57,6 +57,7 @@ class FieldTypeSelect extends Dropdown {
   }
 };
 FieldTypeSelect.propTypes = {
+  value: PropTypes.string,
   field: PropTypes.string,
   fieldIndex: PropTypes.number,
   onChange: PropTypes.func
