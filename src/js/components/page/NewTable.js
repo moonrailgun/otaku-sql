@@ -1,9 +1,14 @@
 import React, {Component, PropTypes} from 'react';
 import TableStructure from '../TableStructure.js';
+import CodePreviewWidget from '../CodePreviewWidget.js';
 
 class NewTable extends Component{
   constructor(props) {
     super(props);
+    this.state = {
+      isOpenCodePreview: false,
+      code: ""
+    }
   }
 
   _checkField(tableField) {
@@ -80,21 +85,44 @@ class NewTable extends Component{
   }
 
   _addBlankRow() {
-    console.log("_addBlankRow");
+    // console.log("_addBlankRow");
     this.refs.tableBody.addBlankRow();
   }
 
   _reviewQueryCommand() {
-    console.log("_reviewQueryCommand");
+    // console.log("_reviewQueryCommand");
+    let tableName = this.refs.tableName.value;
+    if(!tableName){
+      swal({
+        title: "表名不能为空",
+        type: "error"
+      });
+    }else{
+      let tableField = this.refs.tableBody.state.tableField;
+      if(!!tableField){
+        if(this._checkField(tableField)) {
+          let query = this._createQuery(tableName, tableField);
+          this.setState({
+            isOpenCodePreview: true,
+            code: query
+          })
+        }else{
+          swal({
+            title: "字段名不能为空",
+            type: "error"
+          });
+        }
+      }
+    }
   }
 
   _deleteCurrentRow() {
-    console.log("_deleteCurrentRow");
+    // console.log("_deleteCurrentRow");
     this.refs.tableBody.deleteCurrentRow();
   }
 
   render() {
-    console.log("render NewTable");
+    // console.log("render NewTable");
     return (
       <div>
         <div className="container-fluid am-cf">
@@ -150,6 +178,11 @@ class NewTable extends Component{
               </div>
             </div>
           </div>
+          {
+            this.state.isOpenCodePreview ? (
+              <CodePreviewWidget code={this.state.code}/>
+            ): null
+          }
         </div>
       </div>
     )

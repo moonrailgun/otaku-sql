@@ -5,7 +5,10 @@
 
 .table-structure{
   tr{
-    &.active td{
+    .theme-white &.active td{
+      border-color: #999999 !important;
+    }
+    .theme-black &.active td{
       border-color: #fff !important;
     }
 
