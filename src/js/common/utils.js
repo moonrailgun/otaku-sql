@@ -1,3 +1,5 @@
+import appConfig from './config'
+
 let showError = (err, cb) => {
   let errmsg = ""
   if(typeof(err) === "object"){
@@ -35,4 +37,24 @@ let tableStructureHelper = {
   }
 }
 
-export { showError, showSuccess, tableStructureHelper }
+let configHelper = {
+  checkSpecDefaultSize: function(type){
+    const specDefaultSize = appConfig.mysqlDatatype.specDefaultSize;
+    return specDefaultSize[type];
+  },
+  checkSpecNoDefaultValue: function(type){
+    const specNoDefaultValue = appConfig.mysqlDatatype.specNoDefaultValue;
+    for (var i = 0; i < specNoDefaultValue.length; i++) {
+      if(type == specNoDefaultValue[i]){
+        return true;
+      }
+    }
+    return false;
+  },
+  checkSpecDefaultAddon: function(type){
+    const specDefaultAddon = appConfig.mysqlDatatype.specDefaultAddon;
+    return specDefaultAddon[type];
+  }
+}
+
+export { showError, showSuccess, tableStructureHelper, configHelper }

@@ -1,6 +1,10 @@
 import React, {Component, PropTypes} from 'react';
 import TableStructure from '../TableStructure.js';
 import CodePreviewWidget from '../CodePreviewWidget.js';
+import LocalStorage from '../../action/localStorage';
+import SqlManager from '../../action/sqlManager';
+import {showError, showSuccess, configHelper} from '../../common/utils';
+import SqlTableList from './SqlTableList';
 
 class NewTable extends Component{
   constructor(props) {
@@ -26,19 +30,32 @@ class NewTable extends Component{
     // 表结构
     for (var i = 0; i < tableField.length; i++) {
       let item = tableField[i];
+      let type = item._type;
       query += "`"+item._name+"` ";
-      query += item._type;
+      query += type;
+
+      let defaultSize = configHelper.checkSpecDefaultSize(type);
       if(item._length){
         query += "("+item._length+")";
+      }else if(defaultSize){
+        query += "("+defaultSize+")";
       }
+
       if(item._isNotNull){
         query += " NOT NULL";
       }else{
         query += " NULL";
       }
 
-      if(item._default){
-        query += " DEFAULT `" + item._default + "`";
+      if(!configHelper.checkSpecNoDefaultValue(type)){
+        if(item._default){
+          query += " DEFAULT `" + item._default + "`";
+        }
+      }
+
+      let defaultAddon = configHelper.checkSpecDefaultAddon(type);
+      if(defaultAddon){
+        query += " " + defaultAddon;
       }
 
       if (i != tableField.length - 1){
@@ -73,7 +90,24 @@ class NewTable extends Component{
       let tableField = this.refs.tableBody.state.tableField;
       if(!!tableField){
         if(this._checkField(tableField)) {
-          console.log(this._createQuery(tableName, tableField));
+          let query = this._createQuery(tableName, tableField);
+          let info = LocalStorage.getConnectInfo(this.props.connectName);
+          info.database = this.props.databaseName;
+          SqlManager.query(info, query, (error, results, fields) => {
+            if(error){
+              showError(error);
+            }else{
+              showSuccess("数据表已成功添加", function(){
+                this.props.onChangeContentPage(
+                  <SqlTableList
+                    onChangeContentPage = {this.props.onChangeContentPage}
+                    connectName = {this.props.connectName}
+                    databaseName = {this.props.databaseName}
+                     />
+                )
+              });
+            }
+          })
         }else{
           swal({
             title: "字段名不能为空",
@@ -187,6 +221,11 @@ class NewTable extends Component{
       </div>
     )
   }
+}
+NewTable.propTypes = {
+  onChangeContentPage: PropTypes.func,
+  connectName: PropTypes.string,
+  databaseName: PropTypes.string
 }
 
 export default NewTable;
