@@ -1,12 +1,26 @@
-let showError = (err) => {
-  const errmsg = err.stack.split("\n")[0];
+let showError = (err, cb) => {
+  let errmsg = ""
+  if(typeof(err) === "object"){
+    errmsg = err.stack.split("\n")[0];
+  }else{
+    errmsg = err;
+  }
   console.warn(errmsg);
   swal({
     title: "失败!",
     text: errmsg,
     type: "error",
     confirmButtonText: "确认"
-  });
+  }, cb);
+}
+
+let showSuccess = (msg, cb) => {
+  swal({
+    title: "操作成功!",
+    text: msg,
+    type: "success",
+    confirmButtonText: "确认"
+  }, cb);
 }
 
 //structure: SqlManager.getTableStructure返回的数据
@@ -21,4 +35,4 @@ let tableStructureHelper = {
   }
 }
 
-export { showError, tableStructureHelper }
+export { showError, showSuccess, tableStructureHelper }
