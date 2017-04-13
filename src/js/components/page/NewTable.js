@@ -97,7 +97,7 @@ class NewTable extends Component{
             if(error){
               showError(error);
             }else{
-              showSuccess("数据表已成功添加", function(){
+              showSuccess("数据表已成功添加", () => {
                 this.props.onChangeContentPage(
                   <SqlTableList
                     onChangeContentPage = {this.props.onChangeContentPage}

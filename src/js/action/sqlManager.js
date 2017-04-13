@@ -12,7 +12,7 @@ class SqlManager {
   }
 
   // 数据库链接测试
-  static testConnect(sqlInfo, cb){
+  static testConnect(sqlInfo, cb) {
     const host = sqlInfo.host;
     const port = sqlInfo.port;
     const username = sqlInfo.username;
@@ -43,7 +43,7 @@ class SqlManager {
   }
 
   // 获取数据库列表
-  static getDatabases(sqlInfo, cb){
+  static getDatabases(sqlInfo, cb) {
     const host = sqlInfo.host;
     const port = sqlInfo.port;
     const username = sqlInfo.username;
@@ -74,7 +74,7 @@ class SqlManager {
   }
 
   // 获取某个数据库中数据表列表
-  static getTables(sqlInfo, cb){
+  static getTables(sqlInfo, cb) {
     SqlManager.query(sqlInfo, 'SHOW TABLES', function(error, results, fields){
       if (error){
         cb(error, null);
@@ -85,7 +85,7 @@ class SqlManager {
 
   // 获取表结构
   static getTableStructure(sqlInfo, tableName, cb){
-    let query = 'DESCRIBE ' + tableName;
+    let query = 'DESCRIBE `' + tableName + '`';
     SqlManager.query(sqlInfo, query, function(error, results, fields){
       if (error){
         cb(error, null);
@@ -96,7 +96,7 @@ class SqlManager {
 
   // 获取某个表一部分数据
   static selectTable(sqlInfo, tableName, limit, page, cb){
-    let query = 'SELECT * FROM ' + tableName + ' LIMIT ' + (page-1)*limit + ',' + limit;
+    let query = 'SELECT * FROM `' + tableName + '` LIMIT ' + (page-1)*limit + ',' + limit;
     SqlManager.query(sqlInfo, query, function(error, results, fields){
       if (error){
         cb(error, null);

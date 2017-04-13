@@ -18,15 +18,13 @@ class SqlTable extends Component {
     this.updateTableList();
   }
 
-  _getTableField(table) {
-    const sample = table[0];
-    let field = [];
-    for (var key in sample) {
-      if (sample.hasOwnProperty(key)) {
-        field.push(key);
-      }
+  _getTableField(tableStructure) {
+    let res = [];
+    for (var i = 0; i < tableStructure.length; i++) {
+      res.push(tableStructure[i]['Field']);
     }
-    return field;
+
+    return res;
   }
   _getTableRowWithField(row, field) {
     let res = [];
@@ -36,75 +34,71 @@ class SqlTable extends Component {
     }
     return res;
   }
-  _generateTableHeader(field) {
-
-  }
-  _generateTableBody(field) {
-
-  }
 
   updateTableList() {
     let info = LocalStorage.getConnectInfo(this.props.connectName);
     info.database = this.props.databaseName;
 
-    SqlManager.selectTable(
-      info,
-      this.props.tableName,
-      this.state.limit,
-      this.state.page,
-      (err, results) => {
-        if(err){
-          showError(err);
-          return;
-        }
-        // console.log(results);
-
-        const field = this._getTableField(results);
-        const tableHeader = field.map((item, index) => {
-          return <th key={index + "-" + item}>{item}</th>
-        });
-        const tableBody = results.map((row, index) => {
-          const rowHtml = this._getTableRowWithField(row, field).map((_sub, i) => {
-            return (
-              <EditableTableCell
-                key={i+"-"+_sub}
-                value={String(_sub)} />
-            )
-          });
-          return (
-            <tr key={index + "-row"}>
-              {rowHtml}
-            </tr>
-          );
-        });
-
-        const table = (
-          <table className="am-table am-table-compact am-table-striped tpl-table-black" id="example-r">
-            <thead>
-              <tr>
-                {tableHeader}
-              </tr>
-            </thead>
-            <tbody>
-              {tableBody}
-            </tbody>
-          </table>
-        );
-        this.setState({
-          table: table
-        });
-      }
-    );
-
+    // 获取表结构
     SqlManager.getTableStructure(info, this.props.tableName, (err, structure) => {
       if(err){
         showError(err);
         return;
       }
 
-      // console.log(structure);
+      // 获取主键
       const primaryKey = tableStructureHelper.getTablePrimaryKeyField(structure);
       console.log("primaryKey:" + primaryKey);
+
+      SqlManager.selectTable(
+        info,
+        this.props.tableName,
+        this.state.limit,
+        this.state.page,
+        (err, results) => {
+          if(err){
+            showError(err);
+            return;
+          }
+          // console.log(results);
+
+          const field = this._getTableField(structure);
+          const tableHeader = field.map((item, index) => {
+            return <th key={index + "-" + item}>{item}</th>
+          });
+          const tableBody = results.map((row, index) => {
+            return (
+              <tr key={index + "-row"}>
+                {
+                  this._getTableRowWithField(row, field).map((_sub, i) => {
+                    return (
+                      <EditableTableCell
+                        key={i+"-"+_sub}
+                        value={String(_sub)} />
+                    )
+                  })
+                }
+              </tr>
+            );
+          });
+
+          const table = (
+            <table className="am-table am-table-compact am-table-striped tpl-table-black" id="example-r">
+              <thead>
+                <tr>
+                  {tableHeader}
+                </tr>
+              </thead>
+              <tbody>
+                {tableBody}
+              </tbody>
+            </table>
+          );
+          this.setState({
+            table: table
+          });
+        }
+      );
     });
   }
 
@@ -118,7 +112,7 @@ class SqlTable extends Component {
                 <i className="am-icon-database page-header-heading-icon"></i>
                  {this.props.databaseName} <small>{this.props.connectName}</small>
               </div>
-              <p className="page-header-description">{this.props.databaseName}</p>
+              <p className="page-header-description">{this.props.tableName}</p>
             </div>
             <div className="am-u-lg-3 tpl-index-settings-button">
               <button type="button" className="page-header-button">
