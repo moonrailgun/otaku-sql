@@ -105,6 +105,16 @@ class SqlManager {
     });
   }
 
+  static dropTable(sqlInfo, tableName, cb) {
+    let query = "DROP TABLE IF EXISTS `" + tableName + "`";
+    SqlManager.query(sqlInfo, query, function(error, results, fields){
+      if (error){
+        cb(error, null);
+      }
+      cb(null, results);
+    });
+  }
+
   // 查询数据库
   static query(sqlInfo, query, cb){
     const host = sqlInfo.host;

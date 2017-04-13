@@ -3,7 +3,7 @@ import SqlManager from '../../action/sqlManager';
 import LocalStorage from '../../action/localStorage';
 import SqlTable from './SqlTable';
 import NewTable from './NewTable';
-import {showError} from '../../common/utils';
+import {showError, showSuccess} from '../../common/utils';
 
 class SqlTableList extends Component {
   constructor(props) {
@@ -52,7 +52,26 @@ class SqlTableList extends Component {
   }
   // TODO 数据表操作 - 删除
   _tableDelete(tableName) {
-    console.log(tableName);
+    // console.log(tableName);
+    let info = LocalStorage.getConnectInfo(this.props.connectName);
+    info.database = this.props.databaseName;
+
+    SqlManager.dropTable(info, tableName, (err, results) => {
+      if(err){
+        showError(err);
+        return;
+      }
+      
+      showSuccess("数据表已成功删除", () => {
+        this.props.onChangeContentPage(
+          <SqlTableList
+            onChangeContentPage = {this.props.onChangeContentPage}
+            connectName = {this.props.connectName}
+            databaseName = {this.props.databaseName}
+             />
+        )
+      });
+    });
   }
 
   _getTableList(cb) {

@@ -7,13 +7,13 @@ let showError = (err, cb) => {
   }else{
     errmsg = err;
   }
-  console.warn(errmsg);
   swal({
     title: "失败!",
     text: errmsg,
     type: "error",
     confirmButtonText: "确认"
   }, cb);
+  console.warn(errmsg);
 }
 
 let showSuccess = (msg, cb) => {
