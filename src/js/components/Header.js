@@ -8,7 +8,7 @@ class Header extends Component {
 
   _addSql() {
     this.props.onChangeContentPage(
-      <AddSql />
+      <AddSql onAddConnection={this.props.onUpdateSideBar.bind(this)}/>
     )
   }
 

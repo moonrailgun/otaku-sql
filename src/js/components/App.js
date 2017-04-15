@@ -10,10 +10,16 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      contentPage: (<AddSql />)
+      contentPage: (
+        <AddSql onAddConnection={this._updateSideBar.bind(this)}/>
+      )
     };
     this.curConnectName = "";
     this.curDatabaseName = "";
+  }
+
+  _updateSideBar() {
+    this.refs.sideBar.updateSidebarList();
   }
 
   _changeDatabase(connectName, databaseName) {
@@ -30,9 +36,12 @@ class App extends Component {
   render() {
     return (
       <div className="am-g tpl-g">
-        <Header onChangeContentPage = {this._changeContentPage.bind(this)}/>
+        <Header
+          onUpdateSideBar={this._updateSideBar.bind(this)}
+          onChangeContentPage = {this._changeContentPage.bind(this)}/>
         <Skiner />
         <Sidebar
+          ref="sideBar"
           onChangeContentPage = {this._changeContentPage.bind(this)}
           onChangeDatabase={this._changeDatabase.bind(this)} />
         <Content>
