@@ -82,6 +82,8 @@ class AddSql extends Component {
             title: "数据库添加成功!",
             type: "success",
             confirmButtonText: "确认"
+          }, () => {
+            this.props.onAddConnection();
           });
         }else{
           console.warn(results);
@@ -92,7 +94,7 @@ class AddSql extends Component {
             confirmButtonText: "确认"
           });
         }
-      })
+      }.bind(this))
     }
   }
 
