@@ -4,6 +4,7 @@ import SqlManager from '../../action/sqlManager';
 import { showError, tableStructureHelper } from '../../common/utils';
 import EditableTableCell from '../EditableTableCell';
 import Loading from '../Loading.js';
+import SqlTableList from './SqlTableList.js';
 
 class SqlTable extends Component {
   constructor(props) {
@@ -34,6 +35,16 @@ class SqlTable extends Component {
       res.push(row[_key]);
     }
     return res;
+  }
+
+  // 返回到父级页面TableList
+  _toggleToTableList(){
+    this.props.onChangeContentPage(
+      <SqlTableList
+        onChangeContentPage = {this.props.onChangeContentPage}
+        connectName = {this.props.connectName}
+        databaseName = {this.props.databaseName} />
+    );
   }
 
   updateTableList() {
@@ -108,7 +119,7 @@ class SqlTable extends Component {
 
   render() {
     return (
-      <div>
+      <div className="sql-table">
         <div className="container-fluid am-cf">
           <div className="row">
             <div className="am-u-sm-12 am-u-md-12 am-u-lg-9">
@@ -116,7 +127,11 @@ class SqlTable extends Component {
                 <i className="am-icon-database page-header-heading-icon"></i>
                  {this.props.databaseName} <small>{this.props.connectName}</small>
               </div>
-              <p className="page-header-description">{this.props.tableName}</p>
+              <p
+                className="page-header-description link"
+                onClick={this._toggleToTableList.bind(this)}>
+                {this.props.tableName} <i className="am-icon-chevron-right"></i>
+              </p>
             </div>
             <div className="am-u-lg-3 tpl-index-settings-button">
               <button type="button" className="page-header-button">

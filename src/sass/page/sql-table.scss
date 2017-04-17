@@ -1,0 +1,12 @@
+.sql-table{
+  p.page-header-description.link{
+    cursor: pointer;
+
+    i[class*=am-icon-]{
+      transition: margin-left .2s ease-in-out;
+    }
+    &:hover i[class*=am-icon-]{
+      margin-left: 4px;
+    }
+  }
+}
