@@ -4,12 +4,13 @@ import LocalStorage from '../../action/localStorage';
 import SqlTable from './SqlTable';
 import NewTable from './NewTable';
 import {showError, showSuccess} from '../../common/utils';
+import Loading from '../Loading.js';
 
 class SqlTableList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tableList: ""
+      tableList: <Loading />
     }
   }
 
@@ -50,7 +51,6 @@ class SqlTableList extends Component {
   _tableEdit(tableName) {
     console.log(tableName);
   }
-  // TODO 数据表操作 - 删除
   _tableDelete(tableName) {
     // console.log(tableName);
     let info = LocalStorage.getConnectInfo(this.props.connectName);
@@ -61,7 +61,7 @@ class SqlTableList extends Component {
         showError(err);
         return;
       }
-      
+
       showSuccess("数据表已成功删除", () => {
         this.props.onChangeContentPage(
           <SqlTableList
@@ -81,6 +81,9 @@ class SqlTableList extends Component {
     SqlManager.getTables(info, (err, results) => {
       if(err){
         showError(err);
+        this.setState({
+          tableList: null
+        })
         return;
       }
 

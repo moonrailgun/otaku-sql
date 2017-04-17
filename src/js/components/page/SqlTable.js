@@ -3,12 +3,13 @@ import LocalStorage from '../../action/localStorage';
 import SqlManager from '../../action/sqlManager';
 import { showError, tableStructureHelper } from '../../common/utils';
 import EditableTableCell from '../EditableTableCell';
+import Loading from '../Loading.js';
 
 class SqlTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      table: "",
+      table: <Loading />,
       page: 1,
       limit: 20
     }
@@ -58,6 +59,9 @@ class SqlTable extends Component {
         (err, results) => {
           if(err){
             showError(err);
+            this.setState({
+              table: ""
+            })
             return;
           }
           // console.log(results);
